@@ -34,14 +34,17 @@ while(true)
     iinteration = iinteration +1;
     %% user 1
     
-    X = H2*Q2_old*H2'+eye(M);
+    inv_arg = H2*Q2_old*H2'+eye(M);
+    X = H1'/inv_arg*H1;
     [Q1,C1] = ratemaxQk(X,Ptx(1));
         
     %% User 2
    
-    X = H1*Q1_old*H1'+eye(M);
+    inv_arg = H1*Q1_old*H1'+eye(M);
+    X = H2'/inv_arg*H2;
     [Q2,C2] = ratemaxQk(X,Ptx(2));   
     
+    Rsum(iinteration) = log2(det(eye(M) + H1*Q1*H1'+H2*Q2*H2'));
     %% Check for convergence
     if sum([norm(Q1-Q1_old,'fro')^2,norm(Q2-Q2_old,'fro')^2])<epsilon
         break;
@@ -51,10 +54,11 @@ while(true)
     end
     
     
+    
 end
 
 Csum = C1 + C2;
-Rsum = log2(det(eye(M) + H1*Q1*H1'+H2*Q2*H2'));
+
 Q(:,:,1) = Q1;
 Q(:,:,2) = Q2;
 
