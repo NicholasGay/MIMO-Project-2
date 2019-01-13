@@ -15,7 +15,7 @@ function [Qk,Ck] = ratemaxQk(Xk,Pk)
 
 %% EVD of Xk
 [V,phi] = eig(Xk);
-phi = diag(phi);
+phi = real(diag(phi));
 %% Psi
 [psi,mu,K] = waterfilling(phi,Pk);
 
