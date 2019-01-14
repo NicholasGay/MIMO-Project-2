@@ -1,5 +1,3 @@
-clear all 
-clc
 P = [0;0];
 load('exampleMAC')
 H1 = H(:,:,1);
@@ -33,12 +31,11 @@ epsilon = 10^(-4);
 
 fig = figure;
 hold on
-
+Q(:,:,2,1) = zeros(2,2);
 for i = 1:1:3
 [R(:,:,i),Rsum(i)] = ratesMAC(Q(:,:,:,i),H);
-r_D = [0; R(2,1,i)];
-r_C = [R(1,2,i); 0];
-fig = plotRegionMAC([r_D,R(:,:,i),r_C],fig);
+
+fig = plotRegionMAC(R(:,:,i),fig);
 end
 
 legend('8','10','12')
