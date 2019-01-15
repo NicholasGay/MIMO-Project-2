@@ -32,28 +32,25 @@ for i = 1:1:length(s)
             R(:,i+1) = R_temp(:,2);
             
             
-        case 1 %% Single User Bounds
-            if w(1) == 0
-                %% user 2 max
-                R(1,i) = 0;
-                Xk = H(:,:,2)'*H(:,:,2);
-                [~,R(2,i)] = ratemaxQk(Xk,P(2));
-            else
-                %% user 1 max
-                R(2,1) = 0;
-                Xk = H(:,:,1)'*H(:,:,1);
-                [~,R(1,i)] = ratemaxQk(Xk,P(1));
-            end
+        case 1 %% Single User Bounds user 2 max
+            R(1,i) = 0;
+            Xk = H(:,:,2)'*H(:,:,2);
+            [~,R(2,i)] = ratemaxQk(Xk,P(2));
+        case -1 %% Single User Bounds user 1 max
+            R(2,i+1) = 0;
+            Xk = H(:,:,1)'*H(:,:,1);
+            [~,R(1,i+1)] = ratemaxQk(Xk,P(1));
+            
         otherwise
             %% WSR
             [Q,Cwsr ] = maxWSRmac(H,P,w);
             [R_temp,~] = ratesMAC(Q,H);
             if w(1) > w(2)
-               l = i+1;
-               R(:,l) = R_temp(:,2);
-               
+                l = i+1;
+                R(:,l) = R_temp(:,2);
+                
             else
-               R(:,i) = R_temp(:,1);
+                R(:,i) = R_temp(:,1);
             end
     end
     
