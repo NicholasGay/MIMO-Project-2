@@ -38,7 +38,7 @@ for l=1:L
         H = sqrt(1/M)*randn(M,K);
         
         % ToDo: Calculate Rsumjoint(l,jj)
-        sum_arg(:,:,1:K) = H(:,1:K)
+        sum_arg(:,:,1:K) = 
         Rsumjoint(l,jj) = log2det(eye(M)+ sum())
     end
 end
