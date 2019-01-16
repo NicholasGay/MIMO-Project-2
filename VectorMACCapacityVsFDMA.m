@@ -53,9 +53,6 @@ for ll=1:2
         
         for ii=2:length(alphavec)-1
             
-            %% Capacity, uncomment below for capacity plot
-            %R(:,ii) = [(alphavec(ii)*C1)+((1-alphavec(ii))*(Csum-C2)); (alphavec(ii)*(Csum-C1))+((1-alphavec(ii))*(C2))];
-            
             %% Rate, uncomment below for rate plot
             R(:,ii) = FDMArates(H,P,alphavec(ii));
         end

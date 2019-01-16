@@ -19,14 +19,14 @@ H1 = H(:,:,1);
 H2 = H(:,:,2);
 [M,N] = size(H1);
 
- % Set YALMIP options
+%% Set YALMIP options
 options = sdpsettings('solver','sdpt3','verbose',0);
 
-% Initialize optimization variables
+%% Initialize optimization variables
 Q1 = sdpvar(N,N,'hermitian','complex');
 Q2 = sdpvar(N,N,'hermitian','complex');
 
-% Define Constraint set
+%% Define Constraint set
 Constraints = [Q1>=0, Q2>=0, trace(Q1) <= P(1), trace(Q2) <= P(2)];
 
 Objective_arg2 = eye(M) + H1*Q1*H1' + H2*Q2*H2';
@@ -38,10 +38,10 @@ else
    Objective = -((w(2)-w(1))*logdet(Objective_arg1) + w(1)*logdet(Objective_arg2));
 end
 
-%Solve Optimization Problem
+%% Solve Optimization Problem
 sol = optimize(Constraints,Objective,options);
 
-%Retrive Solution
+%% Retrive Solution
 Q(:,:,1) = value(Q1);
 Q(:,:,2) = value(Q2);
 

@@ -17,6 +17,7 @@ N = size(H,2);
 
 s = 0:1/(2*S):1;
 
+R = zeros(2,length(s)+1);
 for i = 1:1:length(s)
     w(1) = s(i);
     w(2) = 1-s(i);
@@ -43,7 +44,7 @@ for i = 1:1:length(s)
             
         otherwise
             %% WSR
-            [Q,Cwsr ] = maxWSRmac(H,P,w);
+            [Q,~] = maxWSRmac(H,P,w);
             [R_temp,~] = ratesMAC(Q,H);
             if w(1) > w(2)
                 l = i+1;

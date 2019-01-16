@@ -1,3 +1,6 @@
+clear all
+clc
+close all
 load('exampleMAC')
 PtxdB = 0;
 Ptx = 10.^(PtxdB/10);
@@ -19,9 +22,9 @@ X2 = H2'*H2;
 inv_arg = H2*Q2*H2';
 inv_arg = eye(size(inv_arg)) + inv_arg;
 X1_single = H1'/inv_arg*H1;
-[Q1_single,C1_single] = ratemaxQk(X1_single,Ptx);
+[Q1_single,R1_single] = ratemaxQk(X1_single,Ptx);
 % User 2, Single
 inv_arg = H1*Q1*H1';
 inv_arg = eye(size(inv_arg)) + inv_arg;
 X2_single = H2'/inv_arg*H2;
-[Q2_single,C2_single] = ratemaxQk(X2_single,Ptx);
+[Q2_single,R2_single] = ratemaxQk(X2_single,Ptx);

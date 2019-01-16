@@ -1,10 +1,11 @@
 clear all 
 clc
-P = [0;0];
+close all
+Ptx_dB = [0;0];
 load('exampleMAC')
 H1 = H(:,:,1);
 H2 = H(:,:,2);
-Ptx = 10.^(P/10);
+Ptx = 10.^(Ptx_dB/10);
 %% Question 8
 % User 1
 X1 = H1'*H1;
@@ -26,7 +27,7 @@ X2_single = H2'/inv_arg*H2;
 [Q(:,:,2,2),C2_single] = ratemaxQk(X2_single,Ptx);
 %% Question 12
 epsilon = 10^(-4);
-[Q(:,:,:,3),Csum,Rsum] = iterWaterfill(H,P,epsilon);
+[Q(:,:,:,3),Csum,Rsum] = iterWaterfill(H,Ptx,epsilon);
 
 %% Plotting
 %% need change for single user
@@ -41,6 +42,6 @@ r_C = [R(1,2,i); 0];
 fig = plotRegionMAC([r_D,R(:,:,i),r_C],fig);
 end
 
-legend('8','10','12')
+legend('8 dB','10 dB','12 dB')
 xlabel('R_1')
 ylabel('R_2')

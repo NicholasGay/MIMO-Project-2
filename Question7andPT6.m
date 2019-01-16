@@ -1,3 +1,6 @@
+clear all
+clc
+close all
 %% Question 6
 load('exampleMAC')
 PtxdB = [-10, 0, 10];

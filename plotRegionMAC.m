@@ -13,7 +13,7 @@ function [fig] = plotRegionMAC(R,fig)
 if nargin<2, fig = figure; end
 
 % TODO
-x = R(1,:);
-y = R(2,:);
+x = sort(R(1,:),'descend');
+y = sort(R(2,:),'ascend');
 
 plot(x,y);

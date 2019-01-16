@@ -18,10 +18,10 @@ M_vec = (10:10:200)';
 Ptx_db = 10;
 
 % ToDo: Convert transmit power to linear domain
-Ptx = db2mag(Ptx_db);
+Ptx = 10.^(Ptx_db./10);
 
 % ToDo: Determine the large system approximation
-Rapprox = 
+Rapprox = K*log2(1+Ptx);
 
 Rsumjoint = zeros(L,length(M_vec));
 
@@ -33,18 +33,27 @@ for l=1:L
     for jj = 1:length(M_vec)
         
         M = M_vec(jj);
-        
+        sum_arg = zeros(M,M,K);
         % ToDo: Generate channel in the form H = [h_1,h_2,...,h_K]
-        H = sqrt(1/M)*randn(M,K);
+        H = sqrt(1/(2*M))*randn(M,K)+1i*sqrt(1/(2*M))*randn(M,K);
         
         % ToDo: Calculate Rsumjoint(l,jj)
-        sum_arg(:,:,1:K) = H(:,1:K)
-        Rsumjoint(l,jj) = log2det(eye(M)+ sum())
+        for i = 1:1:K
+            sum_arg(:,:,i) = Ptx*H(:,i)*H(:,i)';
+        end
+        Rsumjoint(l,jj) = log2(det(eye(M)+ sum(sum_arg,3)));
     end
 end
 
 fprintf('\n')
 
 % ToDo: Plot the ergodic sum rate for joint decoding and the large system 
-% approximation versus the number of transmit antennas
 
+% approximation versus the number of transmit antennas
+figure,
+hold on
+plot(M_vec, real(mean(Rsumjoint)));
+plot(M_vec,ones(length(M_vec))*Rapprox);
+legend('Rsumjoint','Rapprox');
+xlabel('M')
+ylabel('R')
